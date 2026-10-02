@@ -1,9 +1,12 @@
+import ProtectedRoute from '../components/auth/ProtectedRoute/ProtectedRoute';
 
-
-export default function Home() {
+const RootPage = () => {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-     Test
-    </div>
+    <ProtectedRoute>
+      <h1 className="text-3xl">Welcome to the Root Page</h1>
+      <p>This is the main entry point of the application.</p>
+    </ProtectedRoute>
   );
-}
+};
+
+export default RootPage;

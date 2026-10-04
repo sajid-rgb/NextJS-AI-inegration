@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { setUserData } from '@/lib/auth';
+import { useRouter } from 'next/navigation';
 
 const RegisterForm = () => {
   const [name, setName] = useState('');
@@ -9,12 +11,30 @@ const RegisterForm = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const router = useRouter();
+
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
       alert('Passwords do not match');
       return;
+    }
+
+    const userData = {
+      name,
+      email,
+      password,
+    };
+    const data = setUserData(userData);
+    if (data?.error) {
+      alert(data.error);
+      return;
+    } else if (data?.token) {
+      alert('Registration successful');
+      router.replace('/dashboard');
+    } else {
+      alert('Registration failed');
     }
 
     // TODO: Connect to registration API

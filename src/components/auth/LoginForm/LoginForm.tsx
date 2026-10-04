@@ -1,5 +1,6 @@
 'use client';
 
+import { setLoggedInUserData } from '@/lib/auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -12,11 +13,16 @@ const LoginForm = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    const userLoggedIn = {
+      email,
+      password,
+    };
 
-    // Temporary authentication
-    const token = 'fake-jwt-token';
-
-    // setToken(token);
+    const loggedInUser = setLoggedInUserData(userLoggedIn);
+    if (!loggedInUser) {
+      alert('Invalid email or password');
+      return;
+    }
 
     router.replace('/dashboard');
   };

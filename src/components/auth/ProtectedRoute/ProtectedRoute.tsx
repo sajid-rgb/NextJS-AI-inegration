@@ -9,14 +9,16 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const [isChecking, setIsChecking] = useState(false);
 
   useEffect(() => {
-    const token = window.localStorage.getItem('token');
+    const checkAAuthentication = () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        router.push('/login');
+      } else {
+        setIsChecking(true);
+      }
+    };
 
-    if (!token) {
-      router.replace('/login');
-      return;
-    }
-
-    setIsChecking(true);
+    checkAAuthentication();
   }, [router]);
 
   if (!isChecking) {
